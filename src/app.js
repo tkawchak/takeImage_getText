@@ -1,5 +1,4 @@
-'use strict'
-///require dependencies
+'use strict';
 import React, {Component} from 'react';
 import {
   View, 
@@ -9,44 +8,21 @@ import {
   Dimensions,
   StyleSheet
 } from 'react-native';
-import Camera from 'react-native-camera';
+import {StackNavigator} from 'react-navigation';
 
-export default class RootComponent extends Component {
+import {HomeScreen} from './HomeScreen.js';
+import {ChooseImage} from './ChooseImage.js';
+import {TakeImage} from './TakeImage.js';
+import {Results} from './Results.js';
 
-  render() {
-    return (
-      <View style={styles.container}>
-        {/*<Text>React Native takeImage_getText!!</Text>
-        <Text>Take a Picture and then get text!!</Text>
-        <Text>Press the button Below to take a picture.</Text>
-        <Button
-          onPress={() => this.takePicture()}
-          title="Take Picture."
-        >
-        </Button>*/}
-        <Camera
-          ref={(cam)=> {
-            this.camera = cam;
-          }}
-          style={styles.preview}
-          aspect={Camera.constants.Aspect.fill}>
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>Take Picture</Text>
-        </Camera>
-      </View>
-    );
-  }
+export const App = StackNavigator({
+  Home: { screen: HomeScreen },
+  TakeImage: { screen: TakeImage },
+  ChooseImage: { screen: ChooseImage},
+  Results: {screen: Results},
+});
 
-  // handle the user taking a picture
-  takePicture() {
-    alert("taking picture!!");
-    const options = {};
-    this.camera.capture({metadata: options})
-      .then((data) => console.log(data))
-      .catch(err => console.error(err));
-  }
-}
-
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
