@@ -18,6 +18,7 @@ export class TakeImage extends React.Component {
   };
 
   render() {
+    const {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
         <Camera
@@ -29,7 +30,7 @@ export class TakeImage extends React.Component {
           captureMode={Camera.constants.CaptureMode.still}>
           <Text 
             style={styles.capture} 
-            onPress={this.takePicture.bind(this)}>Take Picture
+            onPress={this.takePicture.bind(this, navigate)}>Take Picture
           </Text>
         </Camera>
       </View>
@@ -37,11 +38,20 @@ export class TakeImage extends React.Component {
   }
 
   // handle the user taking a picture
-  takePicture() {
-    alert("taking picture!!");
+  takePicture(navigate) {
+    //alert("taking picture!!");
     const options = {};
     this.camera.capture({metadata: options})
-      .then((data) => console.log(data))
+      .then((data) => {
+        alert(data.path);
+        navigate(
+          'Results', 
+          {
+            data: data,
+            practiceData: "hello",
+          }
+        );
+      })
       .catch(err => console.error(err));
   }
 }
